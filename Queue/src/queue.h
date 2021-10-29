@@ -13,15 +13,10 @@ private:
 	private:
 		friend class Queue<T>;
 	public:
-		QueueItem(const T& val, QueueItem* q =0): info(val), next(q) {}
+		QueueItem(const T&, QueueItem* =0);
 		T info;
 		QueueItem* next;
-		QueueItem* copia(QueueItem* q) {
-			if(!q)
-				return 0;
-			else
-				return new QueueItem(q->info, copia(q->next));
-		}
+		QueueItem* copia(QueueItem*);
 	};
 	Queue::QueueItem* primo;
 	Queue::QueueItem* ultimo;
@@ -34,6 +29,14 @@ public:
 	Queue(const Queue& q);
 	Queue& operator =(const Queue&);
 };
+
+template <typename T> Queue<T>::QueueItem::QueueItem(const T& val, QueueItem* q): info(val), next(q) {}
+template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q) {
+	if(!q)
+		return 0;
+	else
+		return new QueueItem(q->info, copia(q->next));
+}
 
 template <typename T> Queue<T>::Queue(): primo(0), ultimo(0) {}
 template <typename T> bool Queue<T>::empty() const {
