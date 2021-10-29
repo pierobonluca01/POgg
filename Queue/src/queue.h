@@ -7,28 +7,24 @@
 
 #include <iostream>
 
-template <typename T>
-class QueueItem {
-public:
-	QueueItem(const T&, QueueItem* =0);
-	T info;
-	QueueItem* next;
-	QueueItem* copia(QueueItem* q) {
-		std::cout<<"Zio treno copia";
-		if(!q)
-			return 0;
-		else
-			return new QueueItem(q->info, copia(q->next));
-	}
-};
-
-template <typename T> QueueItem<T>::QueueItem(const T& val, QueueItem* q): info(val), next(q) {}
-
-
 template <typename T> class Queue {
 private:
-	QueueItem<T>* primo;
-	QueueItem<T>* ultimo;
+	class QueueItem {
+	private:
+		friend class Queue<T>;
+	public:
+		QueueItem(const T& val, QueueItem* q =0): info(val), next(q) {}
+		T info;
+		QueueItem* next;
+		QueueItem* copia(QueueItem* q) {
+			if(!q)
+				return 0;
+			else
+				return new QueueItem(q->info, copia(q->next));
+		}
+	};
+	Queue::QueueItem* primo;
+	Queue::QueueItem* ultimo;
 public:
 	Queue();
 	bool empty() const;
@@ -45,9 +41,9 @@ template <typename T> bool Queue<T>::empty() const {
 }
 template <typename T> void Queue<T>::add(const T& val) {
 	if(empty())
-		primo=ultimo=new QueueItem<T>(val);
+		primo=ultimo=new Queue<T>::QueueItem(val);
 	else {
-		ultimo->next=new QueueItem<T>(val);
+		ultimo->next=new Queue<T>::QueueItem(val);
 		ultimo=ultimo->next;
 	}
 }
@@ -56,7 +52,7 @@ template <typename T> T Queue<T>::remove() {
 		std::cerr<<"\t[!] remove() su coda vuota. [!]\n";
 		exit(1);
 	}
-	QueueItem<T>* p=primo;
+	Queue<T>::QueueItem* p=primo;
 	primo=primo->next;
 	T aux=p->info;
 	delete p;
