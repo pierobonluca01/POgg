@@ -28,7 +28,8 @@ private:
 		QueueItem(const T&, QueueItem* =0);
 		T info;
 		QueueItem* next;
-		QueueItem* copia(QueueItem*); //TODO
+		static QueueItem* copia(QueueItem*, QueueItem*&, QueueItem* =nullptr); //TODO
+		QueueItem* scorri(QueueItem*) ;
 	};
 
 	Queue::QueueItem* primo;
@@ -36,11 +37,12 @@ private:
 
 public:
 	Queue();
+	//Queue(const Queue& q): primo(copia(q->primo)), ultimo(scorri(this->primo)) { std::cout<<"Pisnelo costruttore"; }
+	Queue(const Queue& q): ultimo(nullptr), primo(copia(q.primo, ultimo)) {}
 	bool empty() const;
 	void add(const T&);
 	T remove();
 	~Queue();
-	Queue(const Queue& q);
 	Queue& operator =(const Queue&);
 };
 
@@ -49,25 +51,41 @@ public:
 template <typename T> Queue<T>::QueueItem::QueueItem(const T& val, QueueItem* q): info(val), next(q) {}
 
 template <typename T> std::ostream& operator <<(std::ostream& os, const Queue<T>& q) {
-	//
+	//TODO
 	return os;
 }
 
 template <typename T> std::ostream& operator <<(std::ostream& os, const typename Queue<T>::QueueItem& q) {
-	//
+	//TODO
 	return os;
 }
 
-template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q) {
-	if(!q)
-		return 0;
+template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q, QueueItem*& ultimo, QueueItem* prec) { //TODO: Verificare la copia profonda.
+	if(q==nullptr)
+		return ultimo=nullptr;
+	QueueItem* aux=new QueueItem(q->info, prec, nullptr);
+	aux->next=copia(q->next, ultimo, aux);
+	if(q->next==nullptr)
+		ultimo=aux;
+	return aux;
+
+//	if(q==nullptr)
+//		return nullptr;
+//	else
+//		return new QueueItem(q->info, copia(q->next));
+}
+
+template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::scorri(QueueItem* q) {
+	if(q->next==nullptr)
+		return q;
 	else
-		return new QueueItem(q->info, copia(q->next));
+		return scorri(q->next);
 }
 
 
-
 template <typename T> Queue<T>::Queue(): primo(0), ultimo(0) {}
+
+//template <typename T> Queue<T>::Queue(const Queue& q): primo(copia(q)), ultimo(scorri(this->primo)) { std::cout<<"pisenlo costruttore"; }
 
 template <typename T> bool Queue<T>::empty() const {
 	return (primo==nullptr);
@@ -98,6 +116,5 @@ template <typename T> Queue<T>::~Queue() {
 	while(!empty())
 		remove();
 }
-
 
 #endif /* QUEUE_H_ */
