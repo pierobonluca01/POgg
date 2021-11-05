@@ -30,7 +30,7 @@ public:
 	bool operator <(const orario&) const;
 	bool operator ==(const orario&) const;
 
-private:
+protected:
 	int sec;
 };
 
