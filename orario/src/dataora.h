@@ -15,9 +15,14 @@ private:
 	int mese;
 	int anno;
 public:
-	int Giorno();
-	int Mese();
-	int Anno();
+	dataora(int =2021, int =1, int =1, int =0, int =0, int =0);
+	int Giorno() const;
+	int Mese() const;
+	int Anno() const;
+	int GiorniDelMese() const;
+	void AvanzaUnGiorno();
+
+	dataora operator +(const orario&) const;
 };
 
 class dataorasett: public dataora {

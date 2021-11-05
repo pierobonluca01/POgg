@@ -10,6 +10,7 @@
 #include "orario.h"
 #include "telefonata.h"
 #include "bolletta.h"
+#include "dataora.h"
 template orario min(orario, orario);
 
 using std::cout;
@@ -59,5 +60,8 @@ int main() {
 	cout<<endl<<endl<<min<int>(a, b);
 	cout<<endl<<endl<<min<orario>(ao, bo);
 
+	dataora d(400, 02, 29);
+	//d.AvanzaUnGiorno();
+	cout<<endl<<d.Giorno()<<"/"<<d.Mese()<<"/"<<d.Anno();
 	return 0;
 }
