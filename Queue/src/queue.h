@@ -28,7 +28,7 @@ private:
 		QueueItem(const T&, QueueItem* =nullptr);
 		T info;
 		QueueItem* next;
-		static QueueItem* copia(QueueItem*, QueueItem*&); //TODO
+		static QueueItem* copia(QueueItem*);
 	};
 
 	QueueItem* ultimo;
@@ -36,7 +36,6 @@ private:
 
 public:
 	Queue();
-	//Queue(const Queue& q): primo(copia(q->primo)), ultimo(scorri(this->primo)) {}
 	Queue(const Queue&);
 	bool empty() const;
 	void add(const T&);
@@ -59,30 +58,16 @@ template <typename T> std::ostream& operator <<(std::ostream& os, const typename
 	return os;
 }
 
-//template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q, QueueItem*& ultimo, QueueItem* prec) {
-//	if(q==nullptr)
-//		return ultimo=nullptr;
-//	QueueItem* aux=new QueueItem(q->info, prec, nullptr);
-//	aux->next=copia(q->next, ultimo, aux);
-//	if(q->next==nullptr)
-//		ultimo=aux;
-//	return aux;
-//}
-
-template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q, QueueItem*& ultimo) { //TODO: Verificare la copia profonda.
-	std::cout<<"Copia";
-	if(q==nullptr)
-		return nullptr;
-	QueueItem* aux=new QueueItem(q->info, copia(q->next, ultimo));
-	if(q->next==nullptr)
-		ultimo=aux;
-	return aux;
+template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q) {
+    if (q == nullptr){
+        return nullptr;
+    }
+    return new QueueItem(q->info, copia(q->next));
 }
-
 
 template <typename T> Queue<T>::Queue(): ultimo(0), primo(0) {}
 
-template <typename T> Queue<T>::Queue(const Queue& q): ultimo(nullptr), primo(copia(q.primo, ultimo)) { std::cout<<"Costruttore"; }
+template <typename T> Queue<T>::Queue(const Queue& q): ultimo(nullptr), primo(Queue<T>::QueueItem::copia(q.primo)) {}
 
 template <typename T> bool Queue<T>::empty() const {
 	return (primo==nullptr);
