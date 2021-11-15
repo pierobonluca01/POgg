@@ -6,23 +6,26 @@
 #define POL_H_
 
 class punto {
-private:
+protected:
 	double x, y;
 public:
 	punto(double =0, double =0);
+	punto(const punto&);
 	static double lung(const punto&, const punto&);
 };
 
 class poligono {
+private:
+	static const punto* copia(unsigned int, const punto*);
 protected:
 	unsigned int nvertici;
-	punto* pp;
+	const punto* pp; //Array di punti
 public:
-	poligono(unsigned int, const punto);
-	~poligono();
+	poligono(unsigned int, const punto*);
+	//~poligono();
 	poligono(const poligono&);
-	poligono& operator=(const poligono&);
-	double perimetro() const;
+	//poligono& operator=(const poligono&);
+	//double perimetro() const;
 };
 
 
