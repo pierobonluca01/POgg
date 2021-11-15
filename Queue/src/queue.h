@@ -59,7 +59,7 @@ template <typename T> std::ostream& operator <<(std::ostream& os, const typename
 }
 
 template <typename T> typename Queue<T>::QueueItem* Queue<T>::QueueItem::copia(QueueItem* q) {
-    if (q == nullptr){
+    if (q==nullptr){
         return nullptr;
     }
     return new QueueItem(q->info, copia(q->next));
