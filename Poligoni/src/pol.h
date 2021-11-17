@@ -5,6 +5,9 @@
 #ifndef POL_H_
 #define POL_H_
 
+//#define protected public
+//#define private public
+
 class punto {
 protected:
 	double x, y;

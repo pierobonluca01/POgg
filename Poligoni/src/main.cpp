@@ -8,6 +8,7 @@
 
 
 int main() {
+	/* Codice di test, rimuovere i commenti in pol.h
 	punto v[4];
 	for(int i=0; i<4; ++i) {
 		v[i].x=i;
@@ -27,6 +28,7 @@ int main() {
 		std::cout<<" "<<a.pp[i].y;
 		std::cout<<" "<<b.pp[i].y;
 	}
+	*/
 
 	return 0;
 }
