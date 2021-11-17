@@ -3,6 +3,7 @@
 // Author      : Luca Pierobon
 //============================================================================
 
+#include <iostream>
 #include <cmath>
 #include "pol.h"
 
@@ -16,11 +17,29 @@ double punto::lung(const punto& p1, const punto& p2) {
 
 poligono::poligono(unsigned int n, const punto v[]): nvertici(n), pp(v) {}
 
-poligono::poligono(const poligono& pol): nvertici(pol.nvertici), pp(poligono::copia(nvertici, pol.pp)) {}
-
 const punto* poligono::copia(unsigned int nv, const punto* p) {
-	punto* newp=new punto[nv];
+	punto* aux=new punto[nv];
 	for(unsigned int i=0; i<nv; ++i)
-		newp[i]=p[i];
-	return newp;
+		aux[i]=p[i];
+	return aux;
 }
+
+poligono::~poligono() {
+	delete[] pp;
+}
+
+poligono& poligono::operator =(const poligono& pol) {
+	nvertici=pol.nvertici;
+	pp=copia(pol.nvertici, pol.pp);
+	return *this;
+}
+
+double poligono::perimetro() const {
+	double p=0;
+	for(unsigned int i=0; i<(nvertici-1); ++i)
+		p+=punto::lung(pp[i], pp[i+1]);
+	p+=punto::lung(pp[nvertici-1], pp[0]);
+	return p;
+}
+
+poligono::poligono(const poligono& pol): nvertici(pol.nvertici), pp(poligono::copia(nvertici, pol.pp)) {}

@@ -8,27 +8,16 @@
 
 
 int main() {
-	/* Codice di test, rimuovere i commenti in pol.h
-	punto v[4];
-	for(int i=0; i<4; ++i) {
-		v[i].x=i;
-		v[i].y=i*i;
-	}
-	poligono a(4, v);
-	poligono b(a);
+	// Codice di test, rimuovere i commenti in pol.h
 
-	for(int i=0; i<4; ++i) {
-		std::cout<<std::endl;
-		std::cout<<" "<<a.pp[i].x;
-		std::cout<<" "<<b.pp[i].x;
-	}
+	punto v[4]={punto(0, 0), punto(0, 2), punto(2, 2), punto(2, 0)};
+	poligono a(4, v);
+
+	for(int i=0; i<4; ++i)
+		std::cout<<std::endl<<" Punto "<<i<<": "<<a.pp[i].x<<" "<<a.pp[i].y;
+
 	std::cout<<std::endl<<std::endl;;
-	for(int i=0; i<4; ++i) {
-		std::cout<<std::endl;
-		std::cout<<" "<<a.pp[i].y;
-		std::cout<<" "<<b.pp[i].y;
-	}
-	*/
+	std::cout<<" Perimetro: "<<a.perimetro()<<std::endl;
 
 	return 0;
 }
