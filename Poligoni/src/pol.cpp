@@ -21,6 +21,6 @@ poligono::poligono(const poligono& pol): nvertici(pol.nvertici), pp(poligono::co
 const punto* poligono::copia(unsigned int nv, const punto* p) {
 	punto* newp=new punto[nv];
 	for(unsigned int i=0; i<nv; ++i)
-		newp[i]=punto(p[i]);
+		newp[i]=p[i];
 	return newp;
 }
