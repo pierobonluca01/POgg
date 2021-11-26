@@ -25,10 +25,11 @@ protected:
 	const punto* pp; //Array di punti
 public:
 	poligono(unsigned int, const punto*);
-	~poligono();
+	virtual ~poligono();
 	poligono(const poligono&);
 	poligono& operator =(const poligono&);
-	double perimetro() const;
+	virtual double perimetro() const;
+	virtual double area() const =0;
 };
 
 
